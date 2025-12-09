@@ -9,6 +9,9 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.json());
 
 const port = process.env.PORT || 3000;
+app.listen(port, () => {
+  console.log(`Servidor corriendo en el puerto ${port}`);
+});
 
 // Conectar a MongoDB (cambia la URI si usas Atlas)
 mongoose.connect('mongodb://127.0.0.1:27017/exercise-tracker', { useNewUrlParser: true, useUnifiedTopology: true });
