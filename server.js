@@ -9,6 +9,12 @@ app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.json());
 
+const path = require("path");
+
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "index.html"));
+});
+
 // Conectar a MongoDB
 mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log("MongoDB conectado"))
