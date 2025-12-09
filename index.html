@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Exercise Tracker</title>
+    <title>Exercise Tracker | FreeCodeCamp</title>
     <link rel="shortcut icon" href="https://cdn.freecodecamp.org/universal/favicons/favicon.ico" type="image/x-icon"/>
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" type="text/css">
-    <link href="style.css" rel="stylesheet" type="text/css">
+    <link href="/style.css" rel="stylesheet" type="text/css">
   </head>
   <body>
     <div class="container">
@@ -18,19 +18,21 @@
       <form id="exercise-form" method="post">
         <h3>Add Exercises</h3>
         <p><code>POST /api/users/:_id/exercises</code></p>
-        <input id="uid" type="text" name=":_id" placeholder="User ID*">
+        <input id="uid" type="text" name=":_id" placeholder="User ID">
         <input id="desc" type="text" name="description" placeholder="Description*">
         <input id="dur" type="text" name="duration" placeholder="Duration* (mins.)">
         <input id="date" type="text" name="date" placeholder="Date (yyyy-mm-dd)">
         <input type="submit" value="Submit">
       </form>
-      <p><strong>GET users's exercise log: </strong><code>GET /api/users/:_id/logs?[from][&amp;to][&amp;limit]</code></p>
+      <p><strong>GET user's exercise log:</strong> 
+      <code>GET /api/users/:_id/logs?[from][&amp;to][&amp;limit]</code></p>
       <p><strong>[ ]</strong> = optional</p>
       <p><strong>from, to</strong> = dates (yyyy-mm-dd); <strong>limit</strong> = number</p>
     </div>
     <script>
       const exerciseForm = document.getElementById("exercise-form");
-      exerciseForm.addEventListener("submit", () => {
+      
+      exerciseForm.addEventListener("submit", function() {
         const userId = document.getElementById("uid").value;
         exerciseForm.action = `/api/users/${userId}/exercises`;
       });
