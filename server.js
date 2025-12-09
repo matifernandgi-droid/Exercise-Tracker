@@ -14,7 +14,7 @@ app.listen(port, () => {
 });
 
 // Conectar a MongoDB (cambia la URI si usas Atlas)
-mongoose.connect('mongodb://127.0.0.1:27017/exercise-tracker', { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect(process.env.MONGO_URI);
 
 // Esquemas
 const userSchema = new mongoose.Schema({
