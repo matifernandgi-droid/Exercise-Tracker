@@ -2,19 +2,17 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const mongoose = require('mongoose');
+require('dotenv').config();
 
 const app = express();
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.json());
 
-const port = process.env.PORT || 3000;
-app.listen(port, () => {
-  console.log(`Servidor corriendo en el puerto ${port}`);
-});
-
-// Conectar a MongoDB (cambia la URI si usas Atlas)
-mongoose.connect(process.env.MONGO_URI);
+// Conectar a MongoDB
+mongoose.connect(process.env.MONGO_URI)
+  .then(() => console.log("MongoDB conectado"))
+  .catch(err => console.error("Error conectando a MongoDB:", err));
 
 // Esquemas
 const userSchema = new mongoose.Schema({
@@ -45,7 +43,7 @@ app.get('/api/users', async (req, res) => {
   res.json(users);
 });
 
-// Agregar ejercicio a un usuario
+// Agregar ejercicio
 app.post('/api/users/:_id/exercises', async (req, res) => {
   const { description, duration, date } = req.body;
   const userId = req.params._id;
@@ -73,7 +71,7 @@ app.post('/api/users/:_id/exercises', async (req, res) => {
   });
 });
 
-// Obtener log de ejercicios
+// Logs
 app.get('/api/users/:_id/logs', async (req, res) => {
   const userId = req.params._id;
   const user = await User.findById(userId);
@@ -82,6 +80,7 @@ app.get('/api/users/:_id/logs', async (req, res) => {
   let query = { userId };
 
   const { from, to, limit } = req.query;
+
   if (from || to) query.date = {};
   if (from) query.date.$gte = new Date(from);
   if (to) query.date.$lte = new Date(to);
@@ -105,6 +104,8 @@ app.get('/api/users/:_id/logs', async (req, res) => {
   });
 });
 
+// Solo un listen
+const port = process.env.PORT || 3000;
 app.listen(port, () => {
   console.log(`Servidor corriendo en el puerto ${port}`);
 });
